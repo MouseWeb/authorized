@@ -2,6 +2,9 @@
 
 Este projeto implementa um Authorized de transações usando Spring Boot, arquitetura hexagonal, JPA e bloqueio pessimista para controle de concorrência.
 
+### Arquitetura Hexagonal
+![img_8.png](img_8.png)
+
 Bloqueio Pessimista (SELECT ... FOR UPDATE)
 
 Para garantir que duas transações simultâneas não leiam e alterem o saldo de um mesmo cartão ao mesmo tempo (evitando débito duplo), usamos pessimistic locking no JPA:
