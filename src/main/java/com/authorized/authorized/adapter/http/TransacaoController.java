@@ -22,6 +22,7 @@ public class TransacaoController implements TransacaoApi {
     @Override
     @PostMapping(produces = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity<String> realizarTransacao(@RequestBody TransacaoDTO dto) {
+
         StatusTransacao status = service.realizarTransacao(
                 dto.getNumeroCartao(),
                 dto.getSenhaCartao(),

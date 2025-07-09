@@ -20,12 +20,13 @@ public class CartaoRepositoryAdapter implements CartaoPortOut {
     @Override
     public Optional<Cartao> findById(String numeroCartao) {
         return repository.findById(numeroCartao)
-                .map(e -> new Cartao(
-                        e.getNumeroCartao(),
-                        e.getSenha(),
-                        e.getSaldo(),
-                        e.getVersion()
-                ));
+                .map(this::toDomain);
+    }
+
+    @Override
+    public Optional<Cartao> findByNumeroCartaoForUpdate(String numeroCartao) {
+        return repository.findByNumeroCartaoForUpdate(numeroCartao)
+                .map(this::toDomain);
     }
 
     @Override
@@ -35,18 +36,21 @@ public class CartaoRepositoryAdapter implements CartaoPortOut {
 
     @Override
     public Cartao save(Cartao cartao) {
-        CartaoEntity entity = new CartaoEntity(
+        CartaoEntity entity = toEntity(cartao);
+        CartaoEntity saved = repository.save(entity);
+        return toDomain(saved);
+    }
+
+    private Cartao toDomain(CartaoEntity e) {
+        return new Cartao(e.getNumeroCartao(), e.getSenha(), e.getSaldo(), e.getVersion());
+    }
+
+    private CartaoEntity toEntity(Cartao cartao) {
+        return new CartaoEntity(
                 cartao.getNumeroCartao(),
                 cartao.getSenha(),
                 cartao.getSaldo(),
                 cartao.getVersion()
-        );
-        CartaoEntity saved = repository.save(entity);
-        return new Cartao(
-                saved.getNumeroCartao(),
-                saved.getSenha(),
-                saved.getSaldo(),
-                saved.getVersion()
         );
     }
 }

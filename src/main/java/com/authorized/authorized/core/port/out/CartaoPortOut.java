@@ -6,6 +6,7 @@ import java.util.Optional;
 
 public interface CartaoPortOut {
     Optional<Cartao> findById(String numeroCartao);
+    Optional<Cartao> findByNumeroCartaoForUpdate(String numeroCartao);
     boolean existsById(String numeroCartao);
     Cartao save(Cartao cartao);
 }

@@ -24,7 +24,7 @@ public class TransacoesUseCase implements TransacaoPortIn {
     @Transactional
     public StatusTransacao realizarTransacao(String numeroCartao, String senha, BigDecimal valor) {
         this.valorTemp = valor;
-        return repository.findById(numeroCartao)
+        return repository.findByNumeroCartaoForUpdate(numeroCartao)
                 // cartão existe
                 .map(cartao -> validarSenha(cartao, senha)
                         // senha correta
